@@ -26,8 +26,8 @@ purchase company in Nigeria.
 ## Quick Start
 
 ```bash
-git clone https://github.com/yourusername/tokada-hire-purchase.git
-cd tokada-hire-purchase
+git clone https://github.com/Miss-Marvis/Tokada-hire-purchase
+cd Tokada-hire-purchase
 ```
 
 ## Project Structure
@@ -67,11 +67,11 @@ Place these images in the `assets/` folder:
 
 **GitHub Page:**
 
-1. Site available at `https://yourusername.github.io/repo-name`
+1. Site available at `https://github.com/Miss-Marvis/Tokada-hire-purchase`
 
 🌐 Live Demo
 
-🚀 Live on Netlify: https://bills-with-buddies.netlify.app/
+🚀 Live on Netlify: https://tokada-hire-purchase.netlify.app/
 
 ## Contact
 

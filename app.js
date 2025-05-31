@@ -3,7 +3,6 @@ const sliderTrack = document.querySelector('.slider-track')
 const imageItems = document.querySelectorAll('.image-item')
 
 if (sliderTrack && imageItems.length > 0) {
-	// Clone slider items once instead of duplicating innerHTML
 	const clonedItems = Array.from(imageItems).map((item) => item.cloneNode(true))
 	clonedItems.forEach((item) => sliderTrack.appendChild(item))
 
@@ -13,20 +12,17 @@ if (sliderTrack && imageItems.length > 0) {
 
 	function moveSlider() {
 		if (!isPaused) {
-			position -= 1 // Move left by 1px per frame
+			position -= 1
 
-			// Reset position for seamless looping
 			if (Math.abs(position) >= sliderTrack.scrollWidth / 2) {
 				position = 0
 			}
 
-			// Use transform with translateX for better performance
 			sliderTrack.style.transform = `translateX(${position}px)`
 		}
 		animationId = requestAnimationFrame(moveSlider)
 	}
 
-	// Pause animation when not in viewport to improve performance
 	const sliderObserver = new IntersectionObserver(
 		(entries) => {
 			entries.forEach((entry) => {
@@ -38,10 +34,8 @@ if (sliderTrack && imageItems.length > 0) {
 
 	sliderObserver.observe(sliderTrack.parentElement)
 
-	// Start the animation
 	moveSlider()
 
-	// Clean up on page unload
 	window.addEventListener('beforeunload', () => {
 		if (animationId) {
 			cancelAnimationFrame(animationId)
@@ -50,15 +44,15 @@ if (sliderTrack && imageItems.length > 0) {
 	})
 }
 
-// Improved counter animation with better optimization
+//Counter animation
 function animateCounter(element) {
 	if (!element) return
 
 	const target = parseInt(element.dataset.target, 10) || 0
 	const suffix = element.dataset.suffix || ''
 	let count = 0
-	const duration = 2000 // 2 seconds
-	const steps = 60 // For smoother animation (60fps)
+	const duration = 2000
+	const steps = 60
 	const increment = target / steps
 	const stepDuration = duration / steps
 
@@ -73,7 +67,7 @@ function animateCounter(element) {
 		return Math.round(num)
 	}
 
-	// Optimization: Use requestAnimationFrame for smoother animation
+	// Optimization: Used requestAnimationFrame for smoother animation
 	const startTime = performance.now()
 	const endValue = target
 
@@ -94,7 +88,6 @@ function animateCounter(element) {
 	requestAnimationFrame(updateCounter)
 }
 
-// Improved Intersection Observer for triggering counter animation
 const counterObserver = new IntersectionObserver(
 	(entries) => {
 		entries.forEach((entry) => {
@@ -107,12 +100,11 @@ const counterObserver = new IntersectionObserver(
 	{ threshold: 0.1, rootMargin: '0px 0px -100px 0px' }
 )
 
-// Observe all counter elements
 document.querySelectorAll('.stat-number').forEach((counter) => {
 	counterObserver.observe(counter)
 })
 
-// Improved testimonial slider
+// testimonial slider
 const testimonialSlider = {
 	currentIndex: 0,
 	slides: document.querySelectorAll('.slide'),
@@ -125,6 +117,14 @@ const testimonialSlider = {
 		this.showSlide(0)
 		this.startAutoSlide()
 		this.addControls()
+
+		// Pause on hover
+		this.container.parentElement.addEventListener('mouseenter', () =>
+			this.stopAutoSlide()
+		)
+		this.container.parentElement.addEventListener('mouseleave', () =>
+			this.startAutoSlide()
+		)
 	},
 
 	showSlide(index) {
@@ -159,7 +159,6 @@ const testimonialSlider = {
 	},
 
 	addControls() {
-		// Add navigation dots
 		const dotsContainer = document.createElement('div')
 		dotsContainer.className = 'slider-dots'
 
@@ -179,7 +178,6 @@ const testimonialSlider = {
 
 		this.container.parentElement.appendChild(dotsContainer)
 
-		// Update active dot
 		this.updateActiveDot()
 	},
 
@@ -195,11 +193,9 @@ const testimonialSlider = {
 	},
 }
 
-// Initialize testimonial slider
 document.addEventListener('DOMContentLoaded', () => {
 	testimonialSlider.init()
 
-	// Initialize animations for elements that should animate on scroll
 	document.querySelectorAll('.fade-in-element').forEach((el) => {
 		const observer = new IntersectionObserver(
 			(entries) => {
@@ -351,16 +347,14 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 })
 
-// Improved FAQ functionality
+//  FAQ functionality
 const tabs = document.querySelectorAll('.tab')
 const accordions = document.querySelectorAll('.accordion')
 
 if (tabs.length && accordions.length) {
-	// Set the default tab to be active (General)
 	const defaultTab = document.querySelector('.tab[data-category="general"]')
 	if (defaultTab) defaultTab.classList.add('active')
 
-	// Show only General accordions by default
 	accordions.forEach((accordion) => {
 		if (accordion.dataset.category === 'general') {
 			accordion.style.display = 'block'
@@ -371,13 +365,10 @@ if (tabs.length && accordions.length) {
 
 	tabs.forEach((tab) => {
 		tab.addEventListener('click', () => {
-			// Remove active class from all tabs
 			tabs.forEach((t) => t.classList.remove('active'))
 
-			// Add active class to clicked tab
 			tab.classList.add('active')
 
-			// Show/hide relevant accordions
 			const category = tab.dataset.category
 			accordions.forEach((accordion) => {
 				if (category === 'general' || accordion.dataset.category === category) {
@@ -397,15 +388,12 @@ if (tabs.length && accordions.length) {
 			const accordion = header.parentElement
 			const content = header.nextElementSibling
 
-			// Toggle active class
 			accordion.classList.toggle('active')
 			content.classList.toggle('active')
 
-			// Update aria-expanded for accessibility
 			const isExpanded = accordion.classList.contains('active')
 			header.setAttribute('aria-expanded', isExpanded)
 
-			// Close other accordions
 			accordionHeaders.forEach((otherHeader) => {
 				if (otherHeader !== header) {
 					otherHeader.parentElement.classList.remove('active')
